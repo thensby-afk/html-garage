@@ -149,6 +149,7 @@ input[type=file]{display:none;}
     <button class="tnav-link" onclick="loadBoard()">Filing Cabinet</button>
     <button class="tnav-link" onclick="show('j1')">Security Prompts</button>
     <button class="tnav-link" onclick="show('about')">About</button>
+    <button id="ts-nav-btn" class="tnav-link" style="display:none" onclick="show('ts-hub')">Tech Services</button>
   </div>
 </nav>
 <div id="breadcrumb" class="bcrumb no-print"></div>
@@ -173,7 +174,7 @@ input[type=file]{display:none;}
 <!-- HOME / OFFICE -->
 <div id="view-office" class="view">
   <div class="img-frame img-frame-home" data-img="IMG-01">
-    <!-- IMG-01 image — run scripts/embed-images.ps1 to embed before deploying -->
+    <!-- [image: base64 stripped for source] -->
   </div>
   <div class="harry" id="office-quip">What do you need, Sunshine?</div>
   <div class="office-nav" id="office-nav">
@@ -213,7 +214,7 @@ input[type=file]{display:none;}
 <!-- ABOUT -->
 <div id="view-about" class="view">
   <div class="img-frame img-frame-scene" data-img="IMG-09">
-    <!-- IMG-09 image — run scripts/embed-images.ps1 to embed before deploying -->
+    <!-- [image: base64 stripped for source] -->
   </div>
   <div class="harry">Everything you need to know about what we do and what we don't. Worth five minutes of your time.</div>
   <div class="card">
@@ -229,7 +230,7 @@ input[type=file]{display:none;}
 <!-- JOURNEY 1: DOWNLOAD PROMPT -->
 <div id="view-j1" class="view">
   <div class="img-frame img-frame-scene" data-img="IMG-08">
-    <!-- IMG-08 image — run scripts/embed-images.ps1 to embed before deploying -->
+    <!-- [image: base64 stripped for source] -->
   </div>
   <div class="harry">Here's your checklist — take it to Claude, work through it, and come back when you've got the remediated file. You'll be fine.</div>
   <div class="card">
@@ -243,7 +244,7 @@ input[type=file]{display:none;}
 <!-- JOURNEY 2: PRE-READ NOTICE -->
 <div id="view-j2-notice" class="view">
   <div class="img-frame img-frame-scene" data-img="IMG-02">
-    <!-- IMG-02 image — run scripts/embed-images.ps1 to embed before deploying -->
+    <!-- [image: base64 stripped for source] -->
   </div>
   <div class="harry">Quick read before we get started — just so you know what we check and what it means. Shouldn't take long.</div>
   <div class="card">
@@ -299,7 +300,7 @@ input[type=file]{display:none;}
 <!-- JOURNEY 2: INTAKE (HIRE FORM) -->
 <div id="view-j2-intake" class="view">
   <div class="img-frame img-frame-scene" data-img="IMG-03">
-    <!-- IMG-03 image — run scripts/embed-images.ps1 to embed before deploying -->
+    <!-- [image: base64 stripped for source] -->
   </div>
   <div class="harry">Let's get your tool registered. Fill in the details below and we'll run the first scan for you.</div>
   <div class="card" style="margin-bottom:14px;">
@@ -341,7 +342,7 @@ input[type=file]{display:none;}
 <!-- JOURNEY 2: PRE-SCAN RESULTS -->
 <div id="view-j2-scan" class="view">
   <div class="img-frame img-frame-scene" data-img="IMG-04">
-    <!-- IMG-04 image — run scripts/embed-images.ps1 to embed before deploying -->
+    <!-- [image: base64 stripped for source] -->
   </div>
   <div class="harry" id="j2-scan-voice">Right, let's see what we're working with.</div>
   <div class="card">
@@ -371,7 +372,7 @@ input[type=file]{display:none;}
 <!-- JOURNEY 2: UPLOAD -->
 <div id="view-j2-upload" class="view">
   <div class="img-frame img-frame-scene" data-img="IMG-05">
-    <!-- IMG-05 image — run scripts/embed-images.ps1 to embed before deploying -->
+    <!-- [image: base64 stripped for source] -->
   </div>
   <div class="harry">Good work getting this far — upload the remediated version and we'll run the checks.</div>
   <div class="fg">
@@ -395,7 +396,7 @@ input[type=file]{display:none;}
 <!-- JOURNEY 2: POST-SCAN COMPARISON -->
 <div id="view-j2-post-scan" class="view">
   <div class="img-frame img-frame-scene" data-img="IMG-06">
-    <!-- IMG-06 image — run scripts/embed-images.ps1 to embed before deploying -->
+    <!-- [image: base64 stripped for source] -->
   </div>
   <div class="harry">Here's how the before and after compare. If everything's looking better, we'll get it certified.</div>
   <div class="card">
@@ -425,7 +426,7 @@ input[type=file]{display:none;}
 <!-- CERT COMPLETE -->
 <div id="view-cert-done" class="view">
   <div class="img-frame img-frame-scene" data-img="IMG-07">
-    <!-- IMG-07 image — run scripts/embed-images.ps1 to embed before deploying -->
+    <!-- [image: base64 stripped for source] -->
   </div>
   <div class="harry" id="cert-done-voice">There you go. All done — don't forget to rename the file. See you in 90 days.</div>
   <div class="card mt12">
@@ -456,7 +457,7 @@ input[type=file]{display:none;}
 <!-- V5C: CHANGE OF OWNERSHIP -->
 <div id="view-v5c" class="view">
   <div class="img-frame img-frame-scene" data-img="IMG-11">
-    <!-- IMG-11 image — run scripts/embed-images.ps1 to embed before deploying -->
+    <!-- [image: base64 stripped for source] -->
   </div>
   <div class="harry">Changing hands, is it? Fill in the transfer details below and we'll update the record.</div>
   <div class="fg"><label>Select solution to transfer <span class="req">*</span></label><select id="v5c-sel" onchange="onV5CSel()"></select></div>
@@ -499,7 +500,7 @@ input[type=file]{display:none;}
 <!-- RETIRE -->
 <div id="view-retire" class="view">
   <div class="img-frame img-frame-scene" data-img="IMG-12">
-    <!-- IMG-12 image — run scripts/embed-images.ps1 to embed before deploying -->
+    <!-- [image: base64 stripped for source] -->
   </div>
   <div class="harry">Taking this one off the road? No problem — fill in the details and we'll close the record out.</div>
   <div class="fg"><label>Select solution to retire <span class="req">*</span></label><select id="ret-sel" onchange="onRetireSel()"></select></div>
@@ -529,7 +530,7 @@ input[type=file]{display:none;}
 <!-- THE FILING CABINET -->
 <div id="view-board" class="view">
   <div class="img-frame img-frame-scene" data-img="IMG-10">
-    <!-- IMG-10 image — run scripts/embed-images.ps1 to embed before deploying -->
+    <!-- [image: base64 stripped for source] -->
   </div>
   <div class="harry">Here's every tool we've certified. If yours is coming up for renewal, now's a good time to book it in.</div>
   <div class="prog-filter no-print">
@@ -568,6 +569,73 @@ input[type=file]{display:none;}
   <button class="btn btn-d mt12" onclick="show('office')">&#8592; Office</button>
 </div>
 
+<!-- TECH SERVICES HUB -->
+<div id="view-ts-hub" class="view">
+  <div class="harry">Tech services only past this point. If you're a citizen developer, you want the main office.</div>
+  <div style="font-weight:bold;letter-spacing:2px;font-size:.8rem;text-transform:uppercase;color:var(--r);margin:12px 0 8px;">Tech Services</div>
+  <div class="office-nav">
+    <button class="onav" onclick="show('ts-audit')">
+      <span class="onav-icon">&#x1F50D;</span>
+      <span class="onav-label">Audit</span>
+      <span class="onav-desc">Verify a solution is authentic and unmodified.</span>
+    </button>
+    <button class="onav" onclick="loadRescan();show('ts-rescan')">
+      <span class="onav-icon">&#x1F504;</span>
+      <span class="onav-label">Rescan All</span>
+      <span class="onav-desc">Re-run C1-C9 checks against all registered solutions.</span>
+    </button>
+    <button class="onav" onclick="show('ts-recall')">
+      <span class="onav-icon">&#x26A0;</span>
+      <span class="onav-label">Recall</span>
+      <span class="onav-desc">Identify and contact owners of solutions that failed checks.</span>
+    </button>
+  </div>
+  <div class="row mt12"><button class="btn btn-d" onclick="show('office')">&#8592; Office</button></div>
+</div>
+<!-- TECH SERVICES: AUDIT -->
+<div id="view-ts-audit" class="view">
+  <div class="harry">Pass me the CMMYY code from the tool's footer, or drop the file and I'll pull it myself.</div>
+  <div class="card">
+    <div class="ct">Audit by CMMYY code</div>
+    <label style="font-size:.8rem;display:block;margin-bottom:4px;">CMMYY code (e.g. C1026)</label>
+    <input type="text" id="ts-audit-code" placeholder="C1026" style="text-transform:uppercase;width:160px;font-family:var(--f);padding:6px 8px;border:1px solid #c8b840;background:var(--bg2);color:var(--tx);">
+    <div class="row mt8"><button class="btn" onclick="tsAuditLookup()">Look up</button></div>
+  </div>
+  <div class="card mt8">
+    <div class="ct">Or upload the tool file</div>
+    <div style="font-size:.8rem;color:var(--dim);margin-bottom:8px;">CMMYY will be extracted from the file automatically.</div>
+    <input type="file" id="ts-audit-file" accept=".html" onchange="tsAuditFromFile(this.files[0])">
+  </div>
+  <div id="ts-audit-result" style="display:none;" class="mt8"></div>
+  <div id="ts-audit-err" class="err mt8" style="display:none;"></div>
+  <div class="row mt12"><button class="btn btn-d" onclick="show('ts-hub')">&#8592; Tech Services</button></div>
+</div>
+<!-- TECH SERVICES: RESCAN ALL -->
+<div id="view-ts-rescan" class="view">
+  <div class="harry">I'll pull each registered tool and run the checks again. This may take a minute.</div>
+  <div class="row mt8" style="justify-content:space-between;align-items:center;">
+    <div id="ts-rescan-status" style="font-size:.8rem;color:var(--dim);"></div>
+    <button class="btn" onclick="rescanAll()" id="ts-rescan-all-btn">Rescan all</button>
+  </div>
+  <div id="ts-rescan-table-wrap" class="mt8"></div>
+  <div id="ts-rescan-err" class="err mt8" style="display:none;"></div>
+  <div class="row mt12"><button class="btn btn-d" onclick="show('ts-hub')">&#8592; Tech Services</button></div>
+</div>
+<!-- TECH SERVICES: RECALL -->
+<div id="view-ts-recall" class="view">
+  <div class="harry">Tell me what you're looking for and I'll pull the list.</div>
+  <div class="card">
+    <div class="ct">Filter criteria</div>
+    <label class="cblabel"><input type="checkbox" id="ts-rcl-c1"> <span>Failed C1 - external dependencies</span></label>
+    <label class="cblabel"><input type="checkbox" id="ts-rcl-c4"> <span>Failed C4 - dynamic code execution</span></label>
+    <label class="cblabel"><input type="checkbox" id="ts-rcl-high" checked> <span>Risk rating HIGH or CRITICAL</span></label>
+    <label class="cblabel"><input type="checkbox" id="ts-rcl-expired"> <span>Certification expired</span></label>
+  </div>
+  <div class="row mt8"><button class="btn" onclick="generateRecallList()">Generate list</button></div>
+  <div id="ts-recall-results" style="display:none;" class="mt8"></div>
+  <div id="ts-recall-err" class="err mt8" style="display:none;"></div>
+  <div class="row mt12"><button class="btn btn-d" onclick="show('ts-hub')">&#8592; Tech Services</button></div>
+</div>
 </div><!-- #app -->
 <script>
 var PASSCODE='HARRYS2026';
@@ -593,6 +661,10 @@ var BREADCRUMBS={
   'v5c-doc':['V5C Document'],
   'retire':[['The Filing Cabinet','board'],'Retire Solution'],
   'retire-done':[['The Filing Cabinet','board'],'Retired'],
+  'ts-hub':['Tech Services'],
+  'ts-audit':[['Tech Services','ts-hub'],'Audit'],
+  'ts-rescan':[['Tech Services','ts-hub'],'Rescan All'],
+  'ts-recall':[['Tech Services','ts-hub'],'Recall'],
   'error':['Error']
 };
 function show(id){
@@ -687,7 +759,7 @@ async function init(attempt){
       var retEl=document.getElementById('ret-email');
       if(retEl)retEl.value=S.role.email;
     }
-    if(S.role.canWriteSqlite)await ensureSchema();
+    if(S.role.canWriteSqlite){await ensureSchema();var tsBtn=document.getElementById('ts-nav-btn');if(tsBtn)tsBtn.style.display='';}
     show('office');
   }catch(e){
     if(attempt<4&&e&&String(e.message||e).toLowerCase().indexOf('unavailable')>=0){
@@ -727,6 +799,8 @@ async function migrateSchema(){
     if(!cols.includes('deploys_to_client'))adds.push("ALTER TABLE registrations ADD COLUMN deploys_to_client INTEGER DEFAULT 0");
     // v1 compat: owner_email may have been certifier_email; owner_name is superseded
     if(cols.includes('owner_name')&&!cols.includes('owner_email'))adds.push("ALTER TABLE registrations ADD COLUMN owner_email TEXT NOT NULL DEFAULT ''");
+    if(!cols.includes('last_scan_at'))adds.push("ALTER TABLE registrations ADD COLUMN last_scan_at TEXT");
+    if(!cols.includes('last_scan_result'))adds.push("ALTER TABLE registrations ADD COLUMN last_scan_result TEXT");
     if(adds.length){
       var batch=['BEGIN'].concat(adds).concat(['COMMIT']);
       await tile.sqlite.batch(batch);
@@ -1612,6 +1686,163 @@ async function exportCSV(){
 }
 
 /* ── BOOT ── */
+
+/* -- TECH SERVICES -- */
+async function tsAuditLookup(){
+  var code=document.getElementById('ts-audit-code').value.trim().toUpperCase();
+  var errEl=document.getElementById('ts-audit-err');
+  var resEl=document.getElementById('ts-audit-result');
+  errEl.style.display='none';resEl.style.display='none';
+  if(!code){errEl.textContent='Enter a CMMYY code.';errEl.style.display='';return;}
+  try{
+    var r=await tile.sqlite.execute("SELECT * FROM registrations WHERE cmmyy_code=?",[code]);
+    if(r.rows.length===0){
+      resEl.innerHTML='<div class="card"><div class="err" style="display:block;">No registered solution found for that code -- this tool is unlicensed.</div></div>';
+      resEl.style.display='';return;
+    }
+    var row=r.rows[0];
+    var sb=row.status==='active'?'<span class="badge b-g">ACTIVE</span>':row.status==='retired'?'<span class="badge b-r">RETIRED</span>':'<span class="badge b-a">'+esc((row.status||'').toUpperCase())+'</span>';
+    var exp=new Date(row.next_due_at);var now=new Date();
+    var eb=(exp<now)?'<span class="badge b-r">EXPIRED</span> ':'<span class="badge b-g">VALID</span> ';
+    var rn=row.status==='retired'?'<div class="note mt8" style="border-left:3px solid var(--r);padding:6px 10px;">This solution has been retired and is no longer in service.</div>':'';
+    resEl.innerHTML='<div class="card"><div class="ct">'+esc(row.solution_name)+'</div>'+
+      '<div><span style="color:var(--dim)">Owner: </span>'+esc(row.owner_email)+'</div>'+
+      '<div><span style="color:var(--dim)">Programme: </span>'+esc(row.programme)+'</div>'+
+      '<div><span style="color:var(--dim)">Registered: </span>'+esc(row.registered_at)+'</div>'+
+      '<div><span style="color:var(--dim)">Expiry: </span>'+eb+esc(row.next_due_at)+'</div>'+
+      '<div><span style="color:var(--dim)">Risk rating: </span>'+ratingBadgeHtml(row.risk_rating||'LOW')+'</div>'+
+      '<div><span style="color:var(--dim)">Status: </span>'+sb+'</div>'+rn+'</div>';
+    resEl.style.display='';
+  }catch(e){errEl.textContent=e.message||String(e);errEl.style.display='';}
+}
+async function tsAuditFromFile(file){
+  var errEl=document.getElementById('ts-audit-err');
+  errEl.style.display='none';
+  if(!file)return;
+  try{
+    var text=await file.text();
+    var m=text.match(/acn-cmmyy['":\s]+([A-Z0-9]+)/i);
+    if(!m){var fn=file.name.match(/_([A-Z]\d{4})\.html$/i);if(fn)m=[null,fn[1].toUpperCase()];}
+    if(!m){errEl.textContent='Could not find a CMMYY code in this file -- it may be unlicensed.';errEl.style.display='';return;}
+    document.getElementById('ts-audit-code').value=m[1].toUpperCase();
+    await tsAuditLookup();
+  }catch(e){errEl.textContent=e.message||String(e);errEl.style.display='';}
+}
+async function loadRescan(){
+  var wrap=document.getElementById('ts-rescan-table-wrap');
+  var status=document.getElementById('ts-rescan-status');
+  var errEl=document.getElementById('ts-rescan-err');
+  if(!wrap)return;
+  errEl.style.display='none';
+  wrap.innerHTML='<div style="font-size:.8rem;color:var(--dim);">Loading registered solutions...</div>';
+  try{
+    var r=await tile.sqlite.execute("SELECT id,solution_name,owner_email,registered_at,last_scan_at,risk_rating,ingests_client_data,tool_file_key FROM registrations WHERE status='active' AND tool_file_key IS NOT NULL ORDER BY registered_at DESC");
+    if(r.rows.length===0){wrap.innerHTML='<div style="font-size:.8rem;color:var(--dim);">No active solutions with stored files.</div>';return;}
+    if(status)status.textContent=r.rows.length+' solution(s) loaded.';
+    var h='<table style="width:100%;border-collapse:collapse;font-size:.8rem;">';
+    h+='<thead><tr style="border-bottom:2px solid var(--g)"><th style="text-align:left;padding:4px 8px">Solution</th><th style="text-align:left;padding:4px 8px">Owner</th><th style="text-align:left;padding:4px 8px">Rating</th><th style="text-align:left;padding:4px 8px">Last scan</th><th style="text-align:right;padding:4px 8px">Action</th></tr></thead><tbody id="ts-rescan-tbody">';
+    r.rows.forEach(function(row,i){
+      h+='<tr id="ts-rescan-row-'+i+'" style="border-bottom:1px solid #d4c870">'+
+        '<td style="padding:4px 8px">'+esc(row.solution_name)+'</td>'+
+        '<td style="padding:4px 8px">'+esc(row.owner_email)+'</td>'+
+        '<td style="padding:4px 8px" id="ts-rescan-rating-'+i+'">'+ratingBadgeHtml(row.risk_rating||'LOW')+'</td>'+
+        '<td style="padding:4px 8px;color:var(--dim)">'+esc(row.last_scan_at||'Never')+'</td>'+
+        '<td style="padding:4px 8px;text-align:right"><button class="btn" style="padding:3px 10px;font-size:.75rem" onclick="rescanOne(\''+esc(row.id)+'\',\''+esc(row.tool_file_key)+'\','+i+','+Number(row.ingests_client_data)+')">Rescan</button></td>'+
+        '</tr>';
+    });
+    h+='</tbody></table>';
+    wrap.innerHTML=h;
+    window._tsRescanRows=r.rows;
+  }catch(e){errEl.textContent=e.message||String(e);errEl.style.display='';}
+}
+async function rescanOne(id,toolKey,rowIdx,clientData){
+  var ratingEl=document.getElementById('ts-rescan-rating-'+rowIdx);
+  var rowEl=document.getElementById('ts-rescan-row-'+rowIdx);
+  var origRating=(window._tsRescanRows&&window._tsRescanRows[rowIdx])?window._tsRescanRows[rowIdx].risk_rating||'LOW':'LOW';
+  if(ratingEl)ratingEl.innerHTML='<span class="badge b-a">Scanning...</span>';
+  try{
+    var fileResp=await tile.files.get(toolKey);
+    var text=await fileResp.text();
+    var checks=runScan(text);
+    var newRating=computeRiskRating(checks,clientData?true:false);
+    var co={};Object.keys(checks).forEach(function(k){co[k]=checks[k].result;});
+    var scanResult=JSON.stringify({checks:co,rating:newRating,scannedAt:new Date().toISOString()});
+    var now=new Date().toISOString().slice(0,10);
+    await tile.sqlite.execute("UPDATE registrations SET risk_rating=?,last_scan_at=?,last_scan_result=? WHERE id=?",[newRating,now,scanResult,id]);
+    var changed=newRating!==origRating;
+    var badge=ratingBadgeHtml(newRating);
+    if(changed)badge+=' <span class="badge b-a" title="Changed from '+esc(origRating)+'">^</span>';
+    if(ratingEl)ratingEl.innerHTML=badge;
+    if(rowEl&&changed)rowEl.style.background='rgba(140,96,8,.12)';
+  }catch(e){if(ratingEl)ratingEl.innerHTML='<span class="badge b-r">Error</span>';}
+}
+async function rescanAll(){
+  if(!window._tsRescanRows||!document.getElementById('ts-rescan-tbody')){await loadRescan();return;}
+  var btn=document.getElementById('ts-rescan-all-btn');if(btn)btn.disabled=true;
+  var rows=window._tsRescanRows;
+  for(var i=0;i<rows.length;i++){await rescanOne(rows[i].id,rows[i].tool_file_key,i,rows[i].ingests_client_data);}
+  if(btn)btn.disabled=false;
+  var st=document.getElementById('ts-rescan-status');
+  if(st)st.textContent='Rescan complete - '+rows.length+' solution(s) checked.';
+}
+async function generateRecallList(){
+  var c1=document.getElementById('ts-rcl-c1').checked;
+  var c4=document.getElementById('ts-rcl-c4').checked;
+  var high=document.getElementById('ts-rcl-high').checked;
+  var expired=document.getElementById('ts-rcl-expired').checked;
+  var resEl=document.getElementById('ts-recall-results');
+  var errEl=document.getElementById('ts-recall-err');
+  errEl.style.display='none';resEl.style.display='none';
+  try{
+    var r=await tile.sqlite.execute("SELECT id,solution_name,owner_email,programme,risk_rating,next_due_at,last_scan_result,status FROM registrations WHERE status='active' ORDER BY risk_rating DESC,next_due_at ASC");
+    var now=new Date();
+    var matched=[];
+    r.rows.forEach(function(row){
+      var sr=null;try{if(row.last_scan_result)sr=JSON.parse(row.last_scan_result);}catch(e){}
+      var hit=(!c1&&!c4&&!high&&!expired);
+      if(!hit&&c1&&sr&&sr.checks&&sr.checks.C1&&sr.checks.C1.pass===false)hit=true;
+      if(!hit&&c4&&sr&&sr.checks&&sr.checks.C4&&sr.checks.C4.pass===false)hit=true;
+      if(!hit&&high&&(row.risk_rating==='HIGH'||row.risk_rating==='CRITICAL'))hit=true;
+      if(!hit&&expired&&new Date(row.next_due_at)<now)hit=true;
+      if(hit)matched.push(row);
+    });
+    if(matched.length===0){resEl.innerHTML='<div class="card"><div style="font-size:.8rem;color:var(--dim);">No solutions match the selected criteria.</div></div>';resEl.style.display='';return;}
+    window._tsRecallRows=matched;
+    var h='<div class="card"><div class="ct">'+matched.length+' solution(s) identified</div>';
+    h+='<table style="width:100%;border-collapse:collapse;font-size:.8rem;margin-bottom:12px"><thead><tr style="border-bottom:2px solid var(--g)"><th style="text-align:left;padding:4px 8px">Solution</th><th style="text-align:left;padding:4px 8px">Owner</th><th style="text-align:left;padding:4px 8px">Programme</th><th style="text-align:left;padding:4px 8px">Rating</th><th style="text-align:left;padding:4px 8px">Expiry</th></tr></thead><tbody>';
+    matched.forEach(function(row){
+      var ef=new Date(row.next_due_at)<now?'<span class="badge b-r">EXP</span> ':'';
+      h+='<tr style="border-bottom:1px solid #d4c870"><td style="padding:4px 8px">'+esc(row.solution_name)+'</td><td style="padding:4px 8px">'+esc(row.owner_email)+'</td><td style="padding:4px 8px">'+esc(row.programme)+'</td><td style="padding:4px 8px">'+ratingBadgeHtml(row.risk_rating)+'</td><td style="padding:4px 8px">'+ef+esc(row.next_due_at)+'</td></tr>';
+    });
+    h+='</tbody></table><div class="row" style="gap:8px;"><button class="btn" onclick="copyRecallEmails()">Copy email list</button><button class="btn" onclick="generateRecallNotice(window._tsRecallRows)">Generate recall notice</button></div></div>';
+    resEl.innerHTML=h;resEl.style.display='';
+  }catch(e){errEl.textContent=e.message||String(e);errEl.style.display='';}
+}
+function copyRecallEmails(){
+  if(!window._tsRecallRows)return;
+  var emails=window._tsRecallRows.map(function(r){return r.owner_email;}).filter(Boolean).join(', ');
+  if(navigator.clipboard)navigator.clipboard.writeText(emails);
+}
+function generateRecallNotice(rows){
+  if(!rows||!rows.length)return;
+  var today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  var li=rows.map(function(r){return '<li>'+esc(r.solution_name)+' ('+esc(r.programme)+') - '+esc(r.owner_email)+'</li>';}).join('');
+  var w=window.open('','_blank');if(!w)return;
+  w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Recall Notice</title>'+
+    '<style>body{font-family:Courier New,monospace;max-width:700px;margin:40px auto;background:#f4f2ec;color:#14100a;font-size:14px;line-height:1.6;}h1{color:#1c440c;letter-spacing:2px;}h2{color:#8a6008;}hr{border:none;border-top:2px solid #c8b840;margin:16px 0;}.sig{color:#5a4818;font-size:.9em;margin-top:24px;border-top:1px solid #c8b840;padding-top:12px;}</style></head><body>'+
+    '<h1>HTML GARAGE - SOLUTION RECALL NOTICE</h1><p>'+today+'</p><hr>'+
+    '<p>The following registered solutions require remediation and recertification. Please bring your solution in within <strong>10 working days</strong>.</p>'+
+    '<h2>Affected solutions</h2><ul>'+li+'</ul>'+
+    '<h2>What to do</h2><ol>'+
+    '<li>Open the HTML Garage: <strong>https://tile.accenture.com/view/html-garage/</strong></li>'+
+    '<li>Navigate to <strong>Certify</strong>.</li>'+
+    '<li>Select <strong>Recertification</strong> and choose your solution.</li>'+
+    '<li>Follow the remediation and certification steps.</li></ol>'+
+    '<p>Contact your Tech Services team with any questions.</p>'+
+    '<div class="sig">Harry and Tony' + "'" + 's Motor Licencing Garage - making solutions roadworthy since 2026</div>'+
+    '</body></html>');
+  w.document.close();
+}
 window.addEventListener('DOMContentLoaded',init);
 </script>
 </body>

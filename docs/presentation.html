@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HTML Garage — Solution Documentation</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--g:#1c440c;--a:#8a6008;--r:#6c1608;--bg:#f4f2ec;--bg2:#fef9c0;--tx:#14100a;--dim:#5a4818;--border:#c8b840;--f:'Courier New',Courier,monospace;}
+html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--f);font-size:13px;line-height:1.6;}
+#layout{display:flex;height:100vh;}
+#sidebar{width:220px;min-width:220px;background:#1a2e0e;color:#d4e8c0;overflow-y:auto;padding:0;flex-shrink:0;}
+#sidebar-head{padding:16px 14px 12px;border-bottom:1px solid #2d4a1a;}
+#sidebar-head .brand{font-weight:bold;letter-spacing:3px;font-size:.75rem;text-transform:uppercase;color:#a8d070;}
+#sidebar-head .sub{font-size:.65rem;color:#6a8a50;margin-top:4px;letter-spacing:.5px;}
+.nav-section{padding:10px 0 4px;}
+.nav-section-label{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:#4a6a30;padding:0 14px 4px;}
+.nav-link{display:block;padding:5px 14px;font-size:.72rem;color:#a0c080;cursor:pointer;text-decoration:none;border-left:2px solid transparent;transition:all .1s;font-family:var(--f);}
+.nav-link:hover,.nav-link.active{color:#d4f0a0;border-left-color:#a8d070;background:rgba(168,208,112,.08);}
+#main{flex:1;overflow-y:auto;padding:0;}
+#topbar{background:#1c440c;color:#d4f0a0;padding:10px 32px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:10;}
+#topbar .title{font-weight:bold;letter-spacing:3px;font-size:.8rem;text-transform:uppercase;}
+#topbar .sub{font-size:.68rem;color:#8ab870;letter-spacing:.5px;}
+.section{padding:28px 32px 40px;border-bottom:1px solid #ddd8c8;max-width:900px;}
+.section:last-child{border-bottom:none;}
+h1{font-size:1.1rem;letter-spacing:2px;text-transform:uppercase;color:var(--g);margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--border);}
+h2{font-size:.85rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--a);margin:20px 0 10px;}
+h3{font-size:.8rem;letter-spacing:1px;color:var(--dim);margin:14px 0 6px;}
+p{margin-bottom:10px;font-size:.82rem;}
+ul,ol{margin:0 0 10px 20px;font-size:.82rem;}
+li{margin-bottom:3px;}
+table{border-collapse:collapse;width:100%;margin-bottom:12px;font-size:.78rem;}
+th{background:var(--bg2);border:1px solid var(--border);padding:5px 8px;text-align:left;color:var(--g);font-weight:bold;}
+td{border:1px solid #d4c870;padding:5px 8px;}
+tr:nth-child(even) td{background:#f9f7f0;}
+.badge{display:inline-block;padding:1px 6px;border-radius:2px;font-size:.7rem;font-weight:bold;letter-spacing:.5px;}
+.b-g{background:#d4ecc0;color:#1c440c;border:1px solid #6a9a3c;}
+.b-a{background:#fef0c0;color:#6a4800;border:1px solid #c8a040;}
+.b-r{background:#f0d0c8;color:#6c1608;border:1px solid #c86050;}
+.b-x{background:#3c0808;color:#f8d0c0;border:1px solid #8c2010;}
+.b-dim{background:#e8e0d0;color:#3c2808;border:1px solid #a09070;}
+.card{background:var(--bg2);border:1px solid var(--border);padding:12px 14px;margin-bottom:10px;border-radius:2px;}
+.card .label{font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:6px;}
+.note{background:#f0ece0;border-left:3px solid var(--a);padding:8px 12px;margin-bottom:10px;font-size:.8rem;color:var(--dim);}
+.mockup{border:2px solid var(--border);background:var(--bg);padding:12px;margin:12px 0;max-width:480px;font-size:.75rem;}
+.mockup .m-title{font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:var(--g);font-size:.7rem;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.mockup .m-harry{background:#e8e4da;border-left:3px solid var(--g);padding:6px 8px;margin-bottom:8px;font-style:italic;color:var(--g);}
+.mockup .m-field{margin-bottom:6px;}
+.mockup .m-field label{display:block;font-size:.68rem;color:var(--dim);margin-bottom:2px;}
+.mockup .m-field input,.mockup .m-field select{width:100%;border:1px solid #c8b840;background:#fffef0;padding:3px 6px;font-family:var(--f);font-size:.75rem;}
+.mockup .m-btn{display:inline-block;background:var(--g);color:#f4f2ec;padding:4px 12px;font-family:var(--f);font-size:.72rem;letter-spacing:1px;cursor:pointer;margin-top:4px;}
+.mockup .m-scan-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #e0d8c8;font-size:.72rem;}
+.swim-wrap{overflow-x:auto;margin:12px 0;}
+svg text{font-family:'Courier New',Courier,monospace;}
+</style>
+</head>
+<body>
+<div id="layout">
+<nav id="sidebar">
+  <div id="sidebar-head">
+    <div class="brand">HTML Garage</div>
+    <div class="sub">Solution Documentation</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">Introduction</div>
+    <a class="nav-link active" onclick="scrollTo('s-overview')">Overview</a>
+    <a class="nav-link" onclick="scrollTo('s-problem')">Problem Statement</a>
+    <a class="nav-link" onclick="scrollTo('s-solution')">Solution</a>
+    <a class="nav-link" onclick="scrollTo('s-arch')">Architecture</a>
+    <a class="nav-link" onclick="scrollTo('s-checks')">C1&#x2013;C9 Checks</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">Citizen Journeys</div>
+    <a class="nav-link" onclick="scrollTo('s-j1')">Security Prompts</a>
+    <a class="nav-link" onclick="scrollTo('s-j2')">Certify</a>
+    <a class="nav-link" onclick="scrollTo('s-j3')">Check Register</a>
+    <a class="nav-link" onclick="scrollTo('s-j4')">Change of Ownership</a>
+    <a class="nav-link" onclick="scrollTo('s-j5')">Retire</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">Tech Services</div>
+    <a class="nav-link" onclick="scrollTo('s-t1')">Update Criteria</a>
+    <a class="nav-link" onclick="scrollTo('s-t2')">Product Recall</a>
+    <a class="nav-link" onclick="scrollTo('s-t3')">Audit</a>
+  </div>
+</nav>
+<div id="main">
+<div id="topbar">
+  <div>
+    <div class="title">HTML Garage</div>
+    <div class="sub">Harry and Tony&#x2019;s Motor Licencing Garage &#x2014; making solutions roadworthy since 2026</div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="section" id="s-overview">
+<h1>Overview</h1>
+<p>HTML Garage is a web-based governance and certification platform for citizen-developer HTML tools. It provides a structured process &#x2014; modelled on the MOT testing regime for motor vehicles &#x2014; that lets Tech Services set and enforce security standards while giving citizen developers a clear, low-friction path to compliance.</p>
+<p>Tools that pass the certification process receive a CMMYY code embedded in the HTML and an entry in the central registry. Tools without a CMMYY code are unlicensed and can be identified and acted upon by Tech Services.</p>
+<table>
+<tr><th>Capability</th><th>What it does</th><th>Who uses it</th></tr>
+<tr><td>Security Prompts</td><td>Checklist for AI-assisted remediation</td><td>Citizen developers</td></tr>
+<tr><td>Certify</td><td>Automated C1&#x2013;C9 scan + certificate</td><td>Citizen developers</td></tr>
+<tr><td>Filing Cabinet</td><td>Browse and search the solution registry</td><td>All users</td></tr>
+<tr><td>Change of Ownership</td><td>Transfer a solution to a new owner</td><td>Solution owners</td></tr>
+<tr><td>Retire</td><td>Decommission a solution from the registry</td><td>Solution owners</td></tr>
+<tr><td>Audit</td><td>Verify a tool is authentic and registered</td><td>Tech Services</td></tr>
+<tr><td>Rescan All</td><td>Re-run checks against all stored solutions</td><td>Tech Services</td></tr>
+<tr><td>Recall</td><td>Generate contact list for affected owners</td><td>Tech Services</td></tr>
+</table>
+<p><strong>Live site:</strong> <a href="https://tile.accenture.com/view/html-garage/" style="color:var(--a)">https://tile.accenture.com/view/html-garage/</a></p>
+</div>
+
+<!-- PROBLEM -->
+<div class="section" id="s-problem">
+<h1>Problem Statement</h1>
+<h2>The landscape</h2>
+<p>AI coding assistants have made it practical for non-developers to build standalone HTML and JavaScript tools. These tools are created outside formal development processes, deployed from local machines or shared drives, and used to deliver real business value.</p>
+<h2>Where they help</h2>
+<ul>
+<li><strong>Simulated dashboards</strong> &#x2014; validate a proposed data product with business users before any build investment.</li>
+<li><strong>Analytical output presentation</strong> &#x2014; compress time from insight to decision with interactive HTML tools.</li>
+<li><strong>Desktop planning tools</strong> &#x2014; encode repeatable business processes without IT dependency.</li>
+</ul>
+<h2>The risks</h2>
+<table>
+<tr><th>Risk</th><th>Description</th></tr>
+<tr><td>Supply chain attack</td><td>Tools loading JS from public CDNs are exposed to library compromise. Developers have no visibility.</td></tr>
+<tr><td>Data ingestion</td><td>Many tools ingest sensitive data files with no handling controls, audit trail, or access restrictions.</td></tr>
+<tr><td>Code injection</td><td>Unvalidated inputs in tools that process external files are attack surfaces.</td></tr>
+<tr><td>Shadow process</td><td>Business processes running on unsupported tools will fail when the tool fails. No support path exists.</td></tr>
+<tr><td>No enforcement boundary</td><td>Without a central register, Tech Services cannot distinguish reviewed tools from unreviewed ones.</td></tr>
+</table>
+</div>
+
+<!-- SOLUTION -->
+<div class="section" id="s-solution">
+<h1>Solution</h1>
+<p>HTML Garage introduces a governance model built around periodic certification, a central registry, and an enforcement boundary.</p>
+<table>
+<tr><th>Vehicle analogy</th><th>HTML Garage equivalent</th></tr>
+<tr><td>MOT test</td><td>C1&#x2013;C9 automated security scan</td></tr>
+<tr><td>Tax disc</td><td>CMMYY code embedded in the tool file</td></tr>
+<tr><td>Vehicle registration</td><td>SQLite registry entry</td></tr>
+<tr><td>MOT certificate</td><td>C001 certificate PDF</td></tr>
+<tr><td>Recall notice</td><td>Tech Services recall for solutions failing updated checks</td></tr>
+<tr><td>Insurance voided by modification</td><td>Certification invalidated if tool is modified post-certification</td></tr>
+</table>
+<p>A certified tool carries a <code>_CMMYY</code> suffix in its filename (e.g. <code>dashboard_C1026.html</code>), an embedded certification footer, and a registry entry. A tool without these markers is unlicensed. Tech Services can spot the difference visually and verify formally via the Audit function.</p>
+</div>
+
+<!-- ARCHITECTURE -->
+<div class="section" id="s-arch">
+<h1>Architecture</h1>
+<div class="swim-wrap">
+<svg width="820" height="200" viewBox="0 0 820 200" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="820" height="200" fill="#f4f2ec"/>
+  <!-- Boxes -->
+  <rect x="20" y="60" width="160" height="80" rx="6" fill="#fef9c0" stroke="#1c440c" stroke-width="2"/>
+  <text x="100" y="95" text-anchor="middle" font-size="10" font-weight="bold" fill="#14100a">HTML Garage</text>
+  <text x="100" y="110" text-anchor="middle" font-size="9" fill="#5a4818">Single HTML file</text>
+  <text x="100" y="123" text-anchor="middle" font-size="9" fill="#5a4818">on Tile platform</text>
+
+  <rect x="250" y="30" width="160" height="60" rx="6" fill="#fef9c0" stroke="#8a6008" stroke-width="2"/>
+  <text x="330" y="55" text-anchor="middle" font-size="10" font-weight="bold" fill="#14100a">SQLite Registry</text>
+  <text x="330" y="70" text-anchor="middle" font-size="9" fill="#5a4818">registrations table</text>
+  <text x="330" y="83" text-anchor="middle" font-size="9" fill="#5a4818">Tile-managed</text>
+
+  <rect x="250" y="110" width="160" height="60" rx="6" fill="#fef9c0" stroke="#8a6008" stroke-width="2"/>
+  <text x="330" y="135" text-anchor="middle" font-size="10" font-weight="bold" fill="#14100a">File Storage</text>
+  <text x="330" y="150" text-anchor="middle" font-size="9" fill="#5a4818">Certified HTML + reports</text>
+  <text x="330" y="163" text-anchor="middle" font-size="9" fill="#5a4818">Tile-managed</text>
+
+  <rect x="480" y="60" width="160" height="80" rx="6" fill="#fef9c0" stroke="#6c1608" stroke-width="2"/>
+  <text x="560" y="93" text-anchor="middle" font-size="10" font-weight="bold" fill="#14100a">User Browser</text>
+  <text x="560" y="108" text-anchor="middle" font-size="9" fill="#5a4818">Citizen Developer</text>
+  <text x="560" y="121" text-anchor="middle" font-size="9" fill="#5a4818">or Tech Services</text>
+
+  <rect x="660" y="60" width="140" height="80" rx="6" fill="#fef9c0" stroke="#5a4818" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="730" y="93" text-anchor="middle" font-size="10" font-weight="bold" fill="#14100a">AI Assistant</text>
+  <text x="730" y="108" text-anchor="middle" font-size="9" fill="#5a4818">Claude / Copilot</text>
+  <text x="730" y="121" text-anchor="middle" font-size="9" fill="#5a4818">(off-platform)</text>
+
+  <!-- Arrows -->
+  <line x1="180" y1="90" x2="248" y2="70" stroke="#1c440c" stroke-width="1.5" marker-end="url(#ao)"/>
+  <line x1="180" y1="110" x2="248" y2="135" stroke="#1c440c" stroke-width="1.5" marker-end="url(#ao)"/>
+  <line x1="412" y1="100" x2="478" y2="100" stroke="#8a6008" stroke-width="1.5" marker-end="url(#aa)"/>
+  <line x1="640" y1="100" x2="658" y2="100" stroke="#5a4818" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#ad)"/>
+
+  <defs>
+    <marker id="ao" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#1c440c"/></marker>
+    <marker id="aa" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#8a6008"/></marker>
+    <marker id="ad" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#5a4818"/></marker>
+  </defs>
+  <text x="210" y="68" font-size="8" fill="#5a4818">reads/writes</text>
+  <text x="425" y="95" font-size="8" fill="#5a4818">served by</text>
+  <text x="643" y="96" font-size="8" fill="#5a4818" text-anchor="middle">optional</text>
+</svg>
+</div>
+<p>The app runs entirely client-side. No server-side code. The Tile platform provides SQLite access, file storage, and user identity. All security logic runs in the browser.</p>
+</div>
+
+<!-- CHECKS -->
+<div class="section" id="s-checks">
+<h1>C1&#x2013;C9 Security Checks</h1>
+<table>
+<tr><th>Check</th><th>Label</th><th>Detects</th><th>Severity</th><th>Result</th></tr>
+<tr><td><strong>C1</strong></td><td>External dependencies</td><td>src/href pointing to external URLs</td><td><span class="badge b-x">CRITICAL</span></td><td>FAIL if any found</td></tr>
+<tr><td><strong>C2</strong></td><td>Content Security Policy</td><td>Absence of CSP meta tag</td><td><span class="badge b-dim">STANDARD</span></td><td>FAIL if absent</td></tr>
+<tr><td><strong>C3</strong></td><td>DOM injection</td><td>.innerHTML assignments</td><td><span class="badge b-a">REVIEW</span></td><td>REVIEW; FAIL if clientData=true</td></tr>
+<tr><td><strong>C4</strong></td><td>Dynamic code execution</td><td>eval() or new Function()</td><td><span class="badge b-x">CRITICAL</span></td><td>FAIL if any found</td></tr>
+<tr><td><strong>C5</strong></td><td>Input validation</td><td>Missing validation on form inputs</td><td><span class="badge b-dim">STANDARD</span></td><td>Scored; FAIL if clientData=true and score=0</td></tr>
+<tr><td><strong>C6</strong></td><td>Formula injection guard</td><td>CSV export without injection guard</td><td><span class="badge b-a">REVIEW</span></td><td>REVIEW if CSV found without guard</td></tr>
+<tr><td><strong>C7</strong></td><td>Data privacy</td><td>localStorage / sessionStorage / cookies</td><td><span class="badge b-a">REVIEW</span></td><td>REVIEW if any found</td></tr>
+<tr><td><strong>C8</strong></td><td>Accenture Security Review block</td><td>Missing review block</td><td><span class="badge b-dim">STANDARD</span></td><td>FAIL if absent</td></tr>
+<tr><td><strong>C9</strong></td><td>Certification footer</td><td>Missing CMMYY footer</td><td><span class="badge b-dim">STANDARD</span></td><td>FAIL if absent</td></tr>
+</table>
+<div class="note">When a solution declares it ingests client data or deploys to a client environment, C3 and C5 are treated as Critical. A REVIEW on either becomes a FAIL.</div>
+</div>
+
+<!-- J1: SECURITY PROMPTS -->
+<div class="section" id="s-j1">
+<h1>Journey 1: Security Prompt Retrieval</h1>
+<p>Citizen developers retrieve a structured checklist to brief an AI assistant for a compliant HTML build or remediation.</p>
+<h2>Actors</h2>
+<table>
+<tr><th>Actor</th><th>Role</th></tr>
+<tr><td>Citizen Developer</td><td>Retrieves and uses the prompt</td></tr>
+<tr><td>HTML Garage</td><td>Displays the checklist</td></tr>
+<tr><td>AI coding assistant</td><td>Applies the prompt to generate or remediate HTML</td></tr>
+</table>
+<h2>Process flow</h2>
+<div class="swim-wrap">
+<svg width="820" height="180" viewBox="0 0 820 180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ao2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#1c440c"/></marker>
+    <marker id="aa2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0,0 8,3 0,6" fill="#8a6008"/></marker>
+  </defs>
+  <!-- Swimlane backgrounds -->
+  <rect x="0" y="0" width="820" height="60" fill="#f0ece0" rx="0"/>
+  <rect x="0" y="60" width="820" height="60" fill="#f8f4e8" rx="0"/>
+  <rect x="0" y="120" width="820" height="60" fill="#f0ece0" rx="0"/>
+  <!-- Lane labels -->
+  <text x="8" y="34" font-size="8" font-weight="bold" fill="#1c440c">CITIZEN</text>
+  <text x="8" y="45" font-size="8" font-weight="bold" fill="#1c440c">DEVELOPER</text>
+  <text x="8" y="94" font-size="8" font-weight="bold" fill="#8a6008">HTML</text>
+  <text x="8" y="105" font-size="8" font-weight="bold" fill="#8a6008">GARAGE</text>
+  <text x="8" y="150" font-size="8" font-weight="bold" fill="#5a4818">AI</text>
+  <text x="8" y="161" font-size="8" font-weight="bold" fill="#5a4818">ASSISTANT</text>
+  <!-- Dividers -->
+  <line x1="70" y1="0" x2="70" y2="180" stroke="#c8b840" stroke-width="1"/>
+  <line x1="0" y1="60" x2="820" y2="60" stroke="#c8b840" stroke-width="1"/>
+  <line x1="0" y1="120" x2="820" y2="120" stroke="#c8b840" stroke-width="1"/>
+  <!-- Steps -->
+  <rect x="80" y="10" width="90" height="40" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="125" y="28" text-anchor="middle" font-size="9" font-weight="bold" fill="#14100a">Navigate to</text>
+  <text x="125" y="41" text-anchor="middle" font-size="9" fill="#14100a">HTML Garage</text>
+
+  <rect x="80" y="70" width="90" height="40" rx="4" fill="#fef9c0" stroke="#8a6008" stroke-width="1.5"/>
+  <text x="125" y="88" text-anchor="middle" font-size="9" font-weight="bold" fill="#14100a">Display</text>
+  <text x="125" y="101" text-anchor="middle" font-size="9" fill="#14100a">security prompt</text>
+
+  <rect x="230" y="10" width="90" height="40" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="275" y="28" text-anchor="middle" font-size="9" font-weight="bold" fill="#14100a">Copy prompt</text>
+  <text x="275" y="41" text-anchor="middle" font-size="9" fill="#14100a">+ HTML source</text>
+
+  <rect x="230" y="130" width="90" height="40" rx="4" fill="#fef9c0" stroke="#5a4818" stroke-width="1.5"/>
+  <text x="275" y="148" text-anchor="middle" font-size="9" font-weight="bold" fill="#14100a">Generate /</text>
+  <text x="275" y="161" text-anchor="middle" font-size="9" fill="#14100a">remediate HTML</text>
+
+  <rect x="380" y="10" width="90" height="40" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="425" y="28" text-anchor="middle" font-size="9" font-weight="bold" fill="#14100a">Receive</text>
+  <text x="425" y="41" text-anchor="middle" font-size="9" fill="#14100a">compliant HTML</text>
+
+  <rect x="530" y="10" width="90" height="40" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="575" y="28" text-anchor="middle" font-size="9" font-weight="bold" fill="#14100a">Proceed to</text>
+  <text x="575" y="41" text-anchor="middle" font-size="9" fill="#14100a">Certify</text>
+
+  <!-- Arrows -->
+  <line x1="125" y1="50" x2="125" y2="68" stroke="#1c440c" stroke-width="1.5" marker-end="url(#ao2)"/>
+  <line x1="170" y1="90" x2="228" y2="30" stroke="#8a6008" stroke-width="1.5" marker-end="url(#aa2)"/>
+  <line x1="275" y1="50" x2="275" y2="128" stroke="#1c440c" stroke-width="1.5" marker-end="url(#ao2)"/>
+  <line x1="320" y1="150" x2="378" y2="30" stroke="#5a4818" stroke-width="1.5" marker-end="url(#ao2)"/>
+  <line x1="470" y1="30" x2="528" y2="30" stroke="#1c440c" stroke-width="1.5" marker-end="url(#ao2)"/>
+</svg>
+</div>
+<h2>Key screen</h2>
+<div class="mockup">
+  <div class="m-title">Security Prompts</div>
+  <div class="m-harry">Here's the checklist &#x2014; take it to Claude, work through it, and come back when you've got the remediated file. You'll be fine.</div>
+  <div style="background:#f0ece0;border:1px solid #c8b840;padding:8px;font-size:.72rem;color:#5a4818;">
+    <div style="margin-bottom:4px;"><strong>SECURITY PROMPT — HTML GARAGE v1.0</strong></div>
+    <div>You are remediating an HTML tool for Accenture internal use. Apply the following requirements...</div>
+    <div style="margin-top:4px;color:#8a6008;">[C1] Remove all external dependencies...</div>
+    <div style="color:#8a6008;">[C2] Add a Content Security Policy meta tag...</div>
+    <div style="color:#8a6008;">[C8] Add the Accenture Security Review block...</div>
+  </div>
+  <div style="margin-top:8px;"><span class="m-btn">Download checklist</span></div>
+</div>
+</div>
+
+<!-- J2: CERTIFY -->
+<div class="section" id="s-j2">
+<h1>Journey 2: Certify</h1>
+<p>Citizen developers certify their HTML tools to obtain a CMMYY code and C001 certificate, creating a registry entry that marks the tool as reviewed and compliant.</p>
+<h2>Actors</h2>
+<table>
+<tr><th>Actor</th><th>Role</th></tr>
+<tr><td>Citizen Developer</td><td>Owns the tool and drives the journey</td></tr>
+<tr><td>HTML Garage</td><td>Runs checks, generates certificate, writes registry entry</td></tr>
+<tr><td>AI coding assistant</td><td>Remediates tool if pre-scan fails (off-platform)</td></tr>
+<tr><td>SQLite registry</td><td>Stores the registration record</td></tr>
+</table>
+<h2>Process flow</h2>
+<div class="swim-wrap">
+<svg width="820" height="300" viewBox="0 0 820 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ao3" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#1c440c"/></marker>
+    <marker id="aa3" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#8a6008"/></marker>
+    <marker id="ar3" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#6c1608"/></marker>
+  </defs>
+  <!-- Lane backgrounds -->
+  <rect x="0" y="0" width="820" height="75" fill="#f0ece0"/>
+  <rect x="0" y="75" width="820" height="75" fill="#f8f4e8"/>
+  <rect x="0" y="150" width="820" height="75" fill="#f0ece0"/>
+  <rect x="0" y="225" width="820" height="75" fill="#f8f4e8"/>
+  <!-- Lane labels -->
+  <text x="6" y="38" font-size="8" font-weight="bold" fill="#1c440c">CITIZEN</text>
+  <text x="6" y="49" font-size="8" font-weight="bold" fill="#1c440c">DEV</text>
+  <text x="6" y="112" font-size="8" font-weight="bold" fill="#8a6008">HTML</text>
+  <text x="6" y="123" font-size="8" font-weight="bold" fill="#8a6008">GARAGE</text>
+  <text x="6" y="183" font-size="8" font-weight="bold" fill="#5a4818">AI</text>
+  <text x="6" y="207" font-size="8" font-weight="bold" fill="#5a4818">REGISTRY</text>
+  <text x="6" y="263" font-size="8" font-weight="bold" fill="#5a4818">REGISTRY</text>
+  <!-- Dividers -->
+  <line x1="60" y1="0" x2="60" y2="300" stroke="#c8b840" stroke-width="1"/>
+  <line x1="0" y1="75" x2="820" y2="75" stroke="#c8b840" stroke-width="1"/>
+  <line x1="0" y1="150" x2="820" y2="150" stroke="#c8b840" stroke-width="1"/>
+  <line x1="0" y1="225" x2="820" y2="225" stroke="#c8b840" stroke-width="1"/>
+  <!-- Row 1: CD steps -->
+  <rect x="68" y="8" width="80" height="58" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="108" y="30" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Notice +</text>
+  <text x="108" y="42" text-anchor="middle" font-size="8" fill="#14100a">scope Qs +</text>
+  <text x="108" y="54" text-anchor="middle" font-size="8" fill="#14100a">declaration</text>
+  <rect x="168" y="8" width="80" height="58" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="208" y="30" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Intake form</text>
+  <text x="208" y="42" text-anchor="middle" font-size="8" fill="#14100a">+ upload</text>
+  <text x="208" y="54" text-anchor="middle" font-size="8" fill="#14100a">HTML file</text>
+  <!-- Row 2: Garage scan -->
+  <rect x="268" y="83" width="80" height="58" rx="4" fill="#fef9c0" stroke="#8a6008" stroke-width="1.5"/>
+  <text x="308" y="105" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Run C1-C9</text>
+  <text x="308" y="117" text-anchor="middle" font-size="8" fill="#14100a">pre-scan</text>
+  <!-- Decision diamond -->
+  <polygon points="398,100 428,117 398,133 368,117" fill="#fef9c0" stroke="#6c1608" stroke-width="1.5"/>
+  <text x="398" y="121" text-anchor="middle" font-size="8" font-weight="bold" fill="#6c1608">PASS?</text>
+  <!-- FAIL path -->
+  <rect x="68" y="158" width="80" height="58" rx="4" fill="#fef9c0" stroke="#6c1608" stroke-width="1.5"/>
+  <text x="108" y="180" text-anchor="middle" font-size="8" font-weight="bold" fill="#6c1608">Download</text>
+  <text x="108" y="192" text-anchor="middle" font-size="8" fill="#14100a">remediation</text>
+  <text x="108" y="204" text-anchor="middle" font-size="8" fill="#14100a">prompt</text>
+  <rect x="168" y="158" width="80" height="58" rx="4" fill="#fef9c0" stroke="#5a4818" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="208" y="180" text-anchor="middle" font-size="8" font-weight="bold" fill="#5a4818">AI fixes</text>
+  <text x="208" y="192" text-anchor="middle" font-size="8" fill="#5a4818">the tool</text>
+  <rect x="268" y="158" width="80" height="58" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="308" y="180" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Upload</text>
+  <text x="308" y="192" text-anchor="middle" font-size="8" fill="#14100a">remediated</text>
+  <text x="308" y="204" text-anchor="middle" font-size="8" fill="#14100a">file</text>
+  <!-- PASS path -->
+  <rect x="468" y="83" width="80" height="58" rx="4" fill="#fef9c0" stroke="#8a6008" stroke-width="1.5"/>
+  <text x="508" y="105" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Post-scan +</text>
+  <text x="508" y="117" text-anchor="middle" font-size="8" fill="#14100a">certificate</text>
+  <text x="508" y="129" text-anchor="middle" font-size="8" fill="#14100a">generation</text>
+  <rect x="568" y="233" width="80" height="58" rx="4" fill="#fef9c0" stroke="#5a4818" stroke-width="1.5"/>
+  <text x="608" y="255" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Write</text>
+  <text x="608" y="267" text-anchor="middle" font-size="8" fill="#14100a">registry</text>
+  <text x="608" y="279" text-anchor="middle" font-size="8" fill="#14100a">entry</text>
+  <rect x="668" y="8" width="80" height="58" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="708" y="27" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Download cert</text>
+  <text x="708" y="39" text-anchor="middle" font-size="8" fill="#14100a">+ rename file</text>
+  <text x="708" y="51" text-anchor="middle" font-size="8" fill="#14100a">_CMMYY.html</text>
+  <!-- Arrows -->
+  <line x1="148" y1="37" x2="166" y2="37" stroke="#1c440c" stroke-width="1.5" marker-end="url(#ao3)"/>
+  <line x1="208" y1="66" x2="308" y2="82" stroke="#1c440c" stroke-width="1.5" marker-end="url(#aa3)"/>
+  <line x1="348" y1="117" x2="366" y2="117" stroke="#8a6008" stroke-width="1.5" marker-end="url(#ar3)"/>
+  <!-- FAIL arrow down -->
+  <line x1="398" y1="133" x2="398" y2="175" stroke="#6c1608" stroke-width="1.5"/>
+  <line x1="398" y1="175" x2="150" y2="175" stroke="#6c1608" stroke-width="1.5"/>
+  <line x1="150" y1="175" x2="150" y2="158" stroke="#6c1608" stroke-width="1.5" marker-end="url(#ar3)"/>
+  <text x="310" y="171" font-size="7" fill="#6c1608">FAIL</text>
+  <line x1="148" y1="187" x2="166" y2="187" stroke="#6c1608" stroke-width="1.5" marker-end="url(#ar3)"/>
+  <line x1="248" y1="187" x2="266" y2="187" stroke="#1c440c" stroke-width="1.5" marker-end="url(#ao3)"/>
+  <!-- PASS arrow right -->
+  <line x1="428" y1="117" x2="466" y2="117" stroke="#1c440c" stroke-width="1.5" marker-end="url(#ao3)"/>
+  <text x="434" y="112" font-size="7" fill="#1c440c">PASS</text>
+  <line x1="508" y1="141" x2="608" y2="231" stroke="#8a6008" stroke-width="1.5" marker-end="url(#aa3)"/>
+  <line x1="548" y1="112" x2="666" y2="37" stroke="#8a6008" stroke-width="1.5" marker-end="url(#ao3)"/>
+</svg>
+</div>
+<h2>Key screen — intake form</h2>
+<div class="mockup">
+  <div class="m-title">Certify &#x203A; Registration</div>
+  <div class="m-harry">Right. Just see what we're working with.</div>
+  <div style="display:flex;gap:10px;margin-bottom:8px;font-size:.72rem;">
+    <label style="display:flex;align-items:center;gap:4px;"><input type="radio" checked> New solution</label>
+    <label style="display:flex;align-items:center;gap:4px;"><input type="radio"> Recertification</label>
+  </div>
+  <div class="m-field"><label>Solution name</label><input value="Forecast Dashboard Q4"></div>
+  <div class="m-field"><label>Programme</label><input value="UU Simpler Smarter Better"></div>
+  <div class="m-field"><label>Owner email</label><input value="owner@accenture.com"></div>
+  <div style="margin-top:6px;"><span class="m-btn">End pre-scan &#x2192;</span></div>
+</div>
+<h2>Key screen — scan results</h2>
+<div class="mockup">
+  <div class="m-title">Pre-scan Results</div>
+  <div class="m-harry">Right. Here's what we've found.</div>
+  <div class="m-scan-row"><span><strong>C1</strong> External dependencies</span><span class="badge b-r">FAIL</span></div>
+  <div class="m-scan-row"><span><strong>C2</strong> Content Security Policy</span><span class="badge b-g">PASS</span></div>
+  <div class="m-scan-row"><span><strong>C3</strong> DOM injection</span><span class="badge b-a">REVIEW</span></div>
+  <div class="m-scan-row"><span><strong>C4</strong> Dynamic code execution</span><span class="badge b-g">PASS</span></div>
+  <div class="m-scan-row"><span><strong>C8</strong> Security Review block</span><span class="badge b-r">FAIL</span></div>
+  <div style="margin-top:8px;background:#f0d8d0;border-left:3px solid #6c1608;padding:5px 8px;font-size:.72rem;">2 critical failures — remediation required before proceeding.</div>
+</div>
+</div>
+
+<!-- J3: CHECK REGISTER -->
+<div class="section" id="s-j3">
+<h1>Journey 3: Check Register</h1>
+<p>Solution owners, managers, and Tech Services browse the Filing Cabinet — a searchable view of all registered solutions.</p>
+<h2>Actors</h2>
+<table>
+<tr><th>Actor</th><th>Role</th></tr>
+<tr><td>Any authenticated user</td><td>Browses and queries the registry</td></tr>
+<tr><td>HTML Garage</td><td>Queries SQLite and renders results</td></tr>
+</table>
+<h2>Process flow</h2>
+<div class="swim-wrap">
+<svg width="820" height="120" viewBox="0 0 820 120" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="ao4" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#1c440c"/></marker></defs>
+  <rect x="0" y="0" width="820" height="60" fill="#f0ece0"/>
+  <rect x="0" y="60" width="820" height="60" fill="#f8f4e8"/>
+  <line x1="60" y1="0" x2="60" y2="120" stroke="#c8b840" stroke-width="1"/>
+  <line x1="0" y1="60" x2="820" y2="60" stroke="#c8b840" stroke-width="1"/>
+  <text x="6" y="34" font-size="8" font-weight="bold" fill="#1c440c">USER</text>
+  <text x="6" y="94" font-size="8" font-weight="bold" fill="#8a6008">GARAGE</text>
+  <rect x="68" y="8" width="90" height="44" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="113" y="27" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Navigate to</text>
+  <text x="113" y="39" text-anchor="middle" font-size="8" fill="#14100a">Filing Cabinet</text>
+  <rect x="208" y="68" width="90" height="44" rx="4" fill="#fef9c0" stroke="#8a6008" stroke-width="1.5"/>
+  <text x="253" y="85" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Query SQLite</text>
+  <text x="253" y="97" text-anchor="middle" font-size="8" fill="#14100a">all solutions</text>
+  <rect x="348" y="8" width="90" height="44" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="393" y="27" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Browse /</text>
+  <text x="393" y="39" text-anchor="middle" font-size="8" fill="#14100a">filter results</text>
+  <rect x="488" y="8" width="90" height="44" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="533" y="27" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">View solution</text>
+  <text x="533" y="39" text-anchor="middle" font-size="8" fill="#14100a">details</text>
+  <line x1="113" y1="52" x2="253" y2="67" stroke="#1c440c" stroke-width="1.5" marker-end="url(#ao4)"/>
+  <line x1="253" y1="68" x2="393" y2="52" stroke="#8a6008" stroke-width="1.5" marker-end="url(#ao4)"/>
+  <line x1="438" y1="30" x2="486" y2="30" stroke="#1c440c" stroke-width="1.5" marker-end="url(#ao4)"/>
+</svg>
+</div>
+<h2>Key screen</h2>
+<div class="mockup">
+  <div class="m-title">The Filing Cabinet</div>
+  <div class="m-harry">Here's every solution we've got on record. What are you looking for?</div>
+  <table style="width:100%;font-size:.7rem;border-collapse:collapse;">
+    <tr style="border-bottom:1px solid #c8b840"><th style="padding:3px 4px;text-align:left;">Solution</th><th>Owner</th><th>Rating</th><th>Expiry</th><th>Status</th></tr>
+    <tr style="border-bottom:1px solid #e0d8c8"><td style="padding:3px 4px;">Forecast Dashboard</td><td>smith@</td><td><span class="badge b-g">LOW</span></td><td>C1027</td><td><span class="badge b-g">ACTIVE</span></td></tr>
+    <tr style="border-bottom:1px solid #e0d8c8"><td style="padding:3px 4px;">Cost Model v2</td><td>jones@</td><td><span class="badge b-a">MEDIUM</span></td><td>C0427</td><td><span class="badge b-g">ACTIVE</span></td></tr>
+    <tr><td style="padding:3px 4px;">Old Planning Tool</td><td>brown@</td><td><span class="badge b-dim">LOW</span></td><td>C0826</td><td><span class="badge b-r">EXPIRED</span></td></tr>
+  </table>
+</div>
+</div>
+
+<!-- J4: CHANGE OF OWNERSHIP -->
+<div class="section" id="s-j4">
+<h1>Journey 4: Change of Ownership</h1>
+<p>When a solution changes hands, the registry is updated to reflect the new owner without requiring recertification.</p>
+<h2>Actors</h2>
+<table>
+<tr><th>Actor</th><th>Role</th></tr>
+<tr><td>Current owner (or manager)</td><td>Initiates the transfer</td></tr>
+<tr><td>HTML Garage</td><td>Updates the registry entry</td></tr>
+<tr><td>SQLite registry</td><td>Stores updated record and transfer history</td></tr>
+</table>
+<h2>Process flow</h2>
+<div class="swim-wrap">
+<svg width="820" height="120" viewBox="0 0 820 120" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="ao5" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#1c440c"/></marker><marker id="aa5" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#8a6008"/></marker></defs>
+  <rect x="0" y="0" width="820" height="60" fill="#f0ece0"/>
+  <rect x="0" y="60" width="820" height="60" fill="#f8f4e8"/>
+  <line x1="60" y1="0" x2="60" y2="120" stroke="#c8b840" stroke-width="1"/>
+  <line x1="0" y1="60" x2="820" y2="60" stroke="#c8b840" stroke-width="1"/>
+  <text x="6" y="34" font-size="8" font-weight="bold" fill="#1c440c">OWNER</text>
+  <text x="6" y="94" font-size="8" font-weight="bold" fill="#8a6008">GARAGE /</text>
+  <text x="6" y="105" font-size="8" font-weight="bold" fill="#8a6008">REGISTRY</text>
+  <rect x="68" y="8" width="90" height="44" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="113" y="25" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Select solution</text>
+  <text x="113" y="37" text-anchor="middle" font-size="8" fill="#14100a">+ enter new</text>
+  <text x="113" y="49" text-anchor="middle" font-size="8" fill="#14100a">owner email</text>
+  <rect x="208" y="68" width="90" height="44" rx="4" fill="#fef9c0" stroke="#8a6008" stroke-width="1.5"/>
+  <text x="253" y="85" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Update owner</text>
+  <text x="253" y="97" text-anchor="middle" font-size="8" fill="#14100a">in registry</text>
+  <rect x="348" y="68" width="90" height="44" rx="4" fill="#fef9c0" stroke="#8a6008" stroke-width="1.5"/>
+  <text x="393" y="85" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Write transfer</text>
+  <text x="393" y="97" text-anchor="middle" font-size="8" fill="#14100a">history record</text>
+  <rect x="488" y="8" width="90" height="44" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="533" y="25" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Confirm</text>
+  <text x="533" y="37" text-anchor="middle" font-size="8" fill="#14100a">transfer</text>
+  <text x="533" y="49" text-anchor="middle" font-size="8" fill="#14100a">complete</text>
+  <line x1="113" y1="52" x2="253" y2="67" stroke="#1c440c" stroke-width="1.5" marker-end="url(#ao5)"/>
+  <line x1="298" y1="90" x2="346" y2="90" stroke="#8a6008" stroke-width="1.5" marker-end="url(#aa5)"/>
+  <line x1="438" y1="90" x2="533" y2="52" stroke="#8a6008" stroke-width="1.5" marker-end="url(#ao5)"/>
+</svg>
+</div>
+</div>
+
+<!-- J5: RETIRE -->
+<div class="section" id="s-j5">
+<h1>Journey 5: Retire</h1>
+<p>When a solution is decommissioned, it is formally retired in the registry — closing the record while preserving the audit trail.</p>
+<h2>Actors</h2>
+<table>
+<tr><th>Actor</th><th>Role</th></tr>
+<tr><td>Solution owner</td><td>Initiates retirement</td></tr>
+<tr><td>HTML Garage</td><td>Updates the registry entry</td></tr>
+</table>
+<h2>Process flow</h2>
+<div class="swim-wrap">
+<svg width="820" height="120" viewBox="0 0 820 120" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="ao6" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#1c440c"/></marker><marker id="aa6" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#8a6008"/></marker></defs>
+  <rect x="0" y="0" width="820" height="60" fill="#f0ece0"/>
+  <rect x="0" y="60" width="820" height="60" fill="#f8f4e8"/>
+  <line x1="60" y1="0" x2="60" y2="120" stroke="#c8b840" stroke-width="1"/>
+  <line x1="0" y1="60" x2="820" y2="60" stroke="#c8b840" stroke-width="1"/>
+  <text x="6" y="34" font-size="8" font-weight="bold" fill="#1c440c">OWNER</text>
+  <text x="6" y="94" font-size="8" font-weight="bold" fill="#8a6008">GARAGE /</text>
+  <text x="6" y="105" font-size="8" font-weight="bold" fill="#8a6008">REGISTRY</text>
+  <rect x="68" y="8" width="90" height="44" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="113" y="27" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Select solution</text>
+  <text x="113" y="39" text-anchor="middle" font-size="8" fill="#14100a">+ reason +</text>
+  <text x="113" y="51" text-anchor="middle" font-size="8" fill="#14100a">declaration</text>
+  <rect x="208" y="68" width="100" height="44" rx="4" fill="#fef9c0" stroke="#8a6008" stroke-width="1.5"/>
+  <text x="258" y="85" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Set status=retired</text>
+  <text x="258" y="97" text-anchor="middle" font-size="8" fill="#14100a">record date + reason</text>
+  <rect x="358" y="8" width="90" height="44" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="403" y="27" text-anchor="middle" font-size="8" font-weight="bold" fill="#14100a">Confirm</text>
+  <text x="403" y="39" text-anchor="middle" font-size="8" fill="#14100a">retirement</text>
+  <line x1="113" y1="52" x2="258" y2="67" stroke="#1c440c" stroke-width="1.5" marker-end="url(#ao6)"/>
+  <line x1="308" y1="90" x2="403" y2="52" stroke="#8a6008" stroke-width="1.5" marker-end="url(#ao6)"/>
+</svg>
+</div>
+</div>
+
+<!-- T1: UPDATE CRITERIA -->
+<div class="section" id="s-t1">
+<h1>Journey 6: Update Security Criteria</h1>
+<p>When a new threat is identified, Tech Services updates the C1&#x2013;C9 checks, redeploys the app, and rescans all existing registered solutions.</p>
+<h2>Actors</h2>
+<table>
+<tr><th>Actor</th><th>Role</th></tr>
+<tr><td>Tech Services (security team)</td><td>Identifies threat, defines detection rule</td></tr>
+<tr><td>HTML Garage maintainer</td><td>Updates runScan() and redeploys app</td></tr>
+<tr><td>HTML Garage (Rescan All)</td><td>Re-runs checks against stored solutions</td></tr>
+<tr><td>Citizen developers (affected)</td><td>Receive recall notice if solutions now fail</td></tr>
+</table>
+<h2>Process flow</h2>
+<div class="swim-wrap">
+<svg width="820" height="240" viewBox="0 0 820 240" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ao7" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#1c440c"/></marker>
+    <marker id="ar7" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#6c1608"/></marker>
+    <marker id="aa7" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#8a6008"/></marker>
+  </defs>
+  <rect x="0" y="0" width="820" height="60" fill="#f8e8e0"/>
+  <rect x="0" y="60" width="820" height="60" fill="#f8f4e8"/>
+  <rect x="0" y="120" width="820" height="60" fill="#f0ece0"/>
+  <rect x="0" y="180" width="820" height="60" fill="#f8e8e0"/>
+  <line x1="60" y1="0" x2="60" y2="240" stroke="#c8b840" stroke-width="1"/>
+  <line x1="0" y1="60" x2="820" y2="60" stroke="#c8b840" stroke-width="1"/>
+  <line x1="0" y1="120" x2="820" y2="120" stroke="#c8b840" stroke-width="1"/>
+  <line x1="0" y1="180" x2="820" y2="180" stroke="#c8b840" stroke-width="1"/>
+  <text x="6" y="30" font-size="7" font-weight="bold" fill="#6c1608">TECH</text>
+  <text x="6" y="41" font-size="7" font-weight="bold" fill="#6c1608">SERVICES</text>
+  <text x="6" y="90" font-size="7" font-weight="bold" fill="#8a6008">MAINTAINER</text>
+  <text x="6" y="150" font-size="7" font-weight="bold" fill="#8a6008">HTML</text>
+  <text x="6" y="161" font-size="7" font-weight="bold" fill="#8a6008">GARAGE</text>
+  <text x="6" y="210" font-size="7" font-weight="bold" fill="#6c1608">CITIZEN</text>
+  <text x="6" y="221" font-size="7" font-weight="bold" fill="#6c1608">DEVS</text>
+  <!-- Boxes -->
+  <rect x="68" y="8" width="90" height="44" rx="4" fill="#fef9c0" stroke="#6c1608" stroke-width="1.5"/>
+  <text x="113" y="27" text-anchor="middle" font-size="8" fill="#14100a">Identify threat</text>
+  <text x="113" y="39" text-anchor="middle" font-size="8" fill="#14100a">+ define rule</text>
+  <rect x="68" y="68" width="90" height="44" rx="4" fill="#fef9c0" stroke="#8a6008" stroke-width="1.5"/>
+  <text x="113" y="85" text-anchor="middle" font-size="8" fill="#14100a">Update</text>
+  <text x="113" y="97" text-anchor="middle" font-size="8" fill="#14100a">runScan()</text>
+  <rect x="208" y="68" width="90" height="44" rx="4" fill="#fef9c0" stroke="#8a6008" stroke-width="1.5"/>
+  <text x="253" y="85" text-anchor="middle" font-size="8" fill="#14100a">Test + deploy</text>
+  <text x="253" y="97" text-anchor="middle" font-size="8" fill="#14100a">to prod</text>
+  <rect x="208" y="128" width="90" height="44" rx="4" fill="#fef9c0" stroke="#8a6008" stroke-width="1.5"/>
+  <text x="253" y="145" text-anchor="middle" font-size="8" fill="#14100a">Rescan all</text>
+  <text x="253" y="157" text-anchor="middle" font-size="8" fill="#14100a">stored files</text>
+  <!-- Decision -->
+  <polygon points="398,140 428,157 398,174 368,157" fill="#fef9c0" stroke="#6c1608" stroke-width="1.5"/>
+  <text x="398" y="161" text-anchor="middle" font-size="7" fill="#6c1608">FAILURES?</text>
+  <rect x="468" y="8" width="90" height="44" rx="4" fill="#fef9c0" stroke="#6c1608" stroke-width="1.5"/>
+  <text x="513" y="27" text-anchor="middle" font-size="8" fill="#14100a">Trigger recall</text>
+  <text x="513" y="39" text-anchor="middle" font-size="8" fill="#14100a">process</text>
+  <rect x="468" y="188" width="90" height="44" rx="4" fill="#fef9c0" stroke="#6c1608" stroke-width="1.5"/>
+  <text x="513" y="207" text-anchor="middle" font-size="8" fill="#14100a">Receive recall</text>
+  <text x="513" y="219" text-anchor="middle" font-size="8" fill="#14100a">+ recertify</text>
+  <!-- Arrows -->
+  <line x1="113" y1="52" x2="113" y2="66" stroke="#6c1608" stroke-width="1.5" marker-end="url(#ar7)"/>
+  <line x1="158" y1="90" x2="206" y2="90" stroke="#8a6008" stroke-width="1.5" marker-end="url(#aa7)"/>
+  <line x1="253" y1="112" x2="253" y2="126" stroke="#8a6008" stroke-width="1.5" marker-end="url(#aa7)"/>
+  <line x1="298" y1="150" x2="366" y2="155" stroke="#8a6008" stroke-width="1.5" marker-end="url(#ar7)"/>
+  <line x1="428" y1="157" x2="513" y2="52" stroke="#6c1608" stroke-width="1.5" marker-end="url(#ar7)"/>
+  <text x="440" y="130" font-size="7" fill="#6c1608">YES</text>
+  <line x1="513" y1="52" x2="513" y2="186" stroke="#6c1608" stroke-width="1.5" marker-end="url(#ar7)"/>
+</svg>
+</div>
+<div class="note">Check logic lives in <code>runScan()</code> in <code>harrys-garage.html</code>. Updating checks requires a code change and redeployment. See <code>scripts/deploy-prod.ps1</code>.</div>
+</div>
+
+<!-- T2: PRODUCT RECALL -->
+<div class="section" id="s-t2">
+<h1>Journey 7: Product Recall</h1>
+<p>When solutions fail updated checks, Tech Services generates a recall list, contacts owners, and tracks remediation to completion.</p>
+<h2>Actors</h2>
+<table>
+<tr><th>Actor</th><th>Role</th></tr>
+<tr><td>Tech Services</td><td>Triggers recall, generates contact list, tracks completion</td></tr>
+<tr><td>HTML Garage (Recall view)</td><td>Filters registry, generates recall notice</td></tr>
+<tr><td>Solution owners</td><td>Receive notice, remediate, recertify</td></tr>
+</table>
+<h2>Process flow</h2>
+<div class="swim-wrap">
+<svg width="820" height="180" viewBox="0 0 820 180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ao8" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#1c440c"/></marker>
+    <marker id="ar8" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#6c1608"/></marker>
+    <marker id="aa8" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#8a6008"/></marker>
+  </defs>
+  <rect x="0" y="0" width="820" height="60" fill="#f8e8e0"/>
+  <rect x="0" y="60" width="820" height="60" fill="#f8f4e8"/>
+  <rect x="0" y="120" width="820" height="60" fill="#f0ece0"/>
+  <line x1="60" y1="0" x2="60" y2="180" stroke="#c8b840" stroke-width="1"/>
+  <line x1="0" y1="60" x2="820" y2="60" stroke="#c8b840" stroke-width="1"/>
+  <line x1="0" y1="120" x2="820" y2="120" stroke="#c8b840" stroke-width="1"/>
+  <text x="6" y="30" font-size="7" font-weight="bold" fill="#6c1608">TECH</text>
+  <text x="6" y="41" font-size="7" font-weight="bold" fill="#6c1608">SERVICES</text>
+  <text x="6" y="90" font-size="7" font-weight="bold" fill="#8a6008">GARAGE</text>
+  <text x="6" y="150" font-size="7" font-weight="bold" fill="#1c440c">OWNERS</text>
+  <rect x="68" y="8" width="90" height="44" rx="4" fill="#fef9c0" stroke="#6c1608" stroke-width="1.5"/>
+  <text x="113" y="25" text-anchor="middle" font-size="8" fill="#14100a">Set filter</text>
+  <text x="113" y="37" text-anchor="middle" font-size="8" fill="#14100a">criteria</text>
+  <text x="113" y="49" text-anchor="middle" font-size="7" fill="#5a4818">(C1/C4 fail, HIGH etc)</text>
+  <rect x="208" y="68" width="90" height="44" rx="4" fill="#fef9c0" stroke="#8a6008" stroke-width="1.5"/>
+  <text x="253" y="85" text-anchor="middle" font-size="8" fill="#14100a">Query registry</text>
+  <text x="253" y="97" text-anchor="middle" font-size="8" fill="#14100a">filter results</text>
+  <rect x="208" y="8" width="90" height="44" rx="4" fill="#fef9c0" stroke="#6c1608" stroke-width="1.5"/>
+  <text x="253" y="25" text-anchor="middle" font-size="8" fill="#14100a">Review list</text>
+  <text x="253" y="37" text-anchor="middle" font-size="8" fill="#14100a">copy emails</text>
+  <text x="253" y="49" text-anchor="middle" font-size="8" fill="#14100a">send notice</text>
+  <rect x="348" y="128" width="90" height="44" rx="4" fill="#fef9c0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="393" y="147" text-anchor="middle" font-size="8" fill="#14100a">Receive notice</text>
+  <text x="393" y="159" text-anchor="middle" font-size="8" fill="#14100a">+ recertify</text>
+  <rect x="488" y="8" width="90" height="44" rx="4" fill="#fef9c0" stroke="#6c1608" stroke-width="1.5"/>
+  <text x="533" y="27" text-anchor="middle" font-size="8" fill="#14100a">Monitor via</text>
+  <text x="533" y="39" text-anchor="middle" font-size="8" fill="#14100a">Filing Cabinet</text>
+  <line x1="158" y1="30" x2="206" y2="30" stroke="#6c1608" stroke-width="1.5" marker-end="url(#ar8)"/>
+  <line x1="113" y1="52" x2="253" y2="66" stroke="#6c1608" stroke-width="1.5" marker-end="url(#aa8)"/>
+  <line x1="253" y1="52" x2="393" y2="127" stroke="#6c1608" stroke-width="1.5" marker-end="url(#ar8)"/>
+  <line x1="438" y1="150" x2="533" y2="52" stroke="#1c440c" stroke-width="1.5" marker-end="url(#ao8)"/>
+</svg>
+</div>
+<h2>Key screen</h2>
+<div class="mockup">
+  <div class="m-title">Recall &#x203A; Results</div>
+  <div class="m-harry">Tell me what you're looking for and I'll pull the list.</div>
+  <div style="font-size:.7rem;margin-bottom:6px;"><label><input type="checkbox" checked> Risk rating HIGH or CRITICAL</label></div>
+  <table style="width:100%;font-size:.7rem;border-collapse:collapse;margin-bottom:8px;">
+    <tr style="border-bottom:1px solid #c8b840"><th style="padding:2px 4px;text-align:left;">Solution</th><th>Owner</th><th>Rating</th></tr>
+    <tr style="border-bottom:1px solid #e0d8c8"><td style="padding:2px 4px;">Cost Model v2</td><td>jones@</td><td><span class="badge b-r">HIGH</span></td></tr>
+    <tr><td style="padding:2px 4px;">Scenario Tool</td><td>patel@</td><td><span class="badge b-x">CRITICAL</span></td></tr>
+  </table>
+  <span class="m-btn" style="margin-right:4px;">Copy email list</span>
+  <span class="m-btn">Generate recall notice</span>
+</div>
+</div>
+
+<!-- T3: AUDIT -->
+<div class="section" id="s-t3">
+<h1>Journey 8: Audit</h1>
+<p>Tech Services verifies whether a tool found in the wild is legitimately certified and unmodified.</p>
+<h2>Actors</h2>
+<table>
+<tr><th>Actor</th><th>Role</th></tr>
+<tr><td>Auditor (Tech Services)</td><td>Locates tool, performs check</td></tr>
+<tr><td>HTML Garage (Audit view)</td><td>Queries registry, returns result</td></tr>
+</table>
+<h2>Process flow</h2>
+<div class="swim-wrap">
+<svg width="820" height="180" viewBox="0 0 820 180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ao9" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#1c440c"/></marker>
+    <marker id="ar9" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#6c1608"/></marker>
+    <marker id="aa9" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#8a6008"/></marker>
+  </defs>
+  <rect x="0" y="0" width="820" height="60" fill="#f8e8e0"/>
+  <rect x="0" y="60" width="820" height="60" fill="#f8f4e8"/>
+  <rect x="0" y="120" width="820" height="60" fill="#f8e8e0"/>
+  <line x1="60" y1="0" x2="60" y2="180" stroke="#c8b840" stroke-width="1"/>
+  <line x1="0" y1="60" x2="820" y2="60" stroke="#c8b840" stroke-width="1"/>
+  <line x1="0" y1="120" x2="820" y2="120" stroke="#c8b840" stroke-width="1"/>
+  <text x="6" y="30" font-size="7" font-weight="bold" fill="#6c1608">AUDITOR</text>
+  <text x="6" y="90" font-size="7" font-weight="bold" fill="#8a6008">GARAGE</text>
+  <text x="6" y="150" font-size="7" font-weight="bold" fill="#6c1608">OUTCOME</text>
+  <!-- Boxes -->
+  <rect x="68" y="8" width="90" height="44" rx="4" fill="#fef9c0" stroke="#6c1608" stroke-width="1.5"/>
+  <text x="113" y="27" text-anchor="middle" font-size="8" fill="#14100a">Visual check:</text>
+  <text x="113" y="39" text-anchor="middle" font-size="8" fill="#14100a">_CMMYY suffix?</text>
+  <rect x="208" y="8" width="90" height="44" rx="4" fill="#fef9c0" stroke="#6c1608" stroke-width="1.5"/>
+  <text x="253" y="27" text-anchor="middle" font-size="8" fill="#14100a">Enter CMMYY</text>
+  <text x="253" y="39" text-anchor="middle" font-size="8" fill="#14100a">or upload file</text>
+  <rect x="348" y="68" width="90" height="44" rx="4" fill="#fef9c0" stroke="#8a6008" stroke-width="1.5"/>
+  <text x="393" y="85" text-anchor="middle" font-size="8" fill="#14100a">Query registry</text>
+  <text x="393" y="97" text-anchor="middle" font-size="8" fill="#14100a">by CMMYY code</text>
+  <!-- Decision -->
+  <polygon points="508,80 538,97 508,114 478,97" fill="#fef9c0" stroke="#6c1608" stroke-width="1.5"/>
+  <text x="508" y="101" text-anchor="middle" font-size="7" fill="#6c1608">FOUND?</text>
+  <!-- Outcomes -->
+  <rect x="568" y="128" width="90" height="44" rx="4" fill="#d4ecc0" stroke="#1c440c" stroke-width="1.5"/>
+  <text x="613" y="145" text-anchor="middle" font-size="8" fill="#1c440c">CERTIFIED</text>
+  <text x="613" y="157" text-anchor="middle" font-size="8" fill="#1c440c">Show details</text>
+  <rect x="668" y="8" width="90" height="44" rx="4" fill="#f0d0c8" stroke="#6c1608" stroke-width="1.5"/>
+  <text x="713" y="27" text-anchor="middle" font-size="8" fill="#6c1608">UNLICENSED</text>
+  <text x="713" y="39" text-anchor="middle" font-size="8" fill="#6c1608">Not in registry</text>
+  <!-- Arrows -->
+  <line x1="158" y1="30" x2="206" y2="30" stroke="#6c1608" stroke-width="1.5" marker-end="url(#ar9)"/>
+  <line x1="253" y1="52" x2="393" y2="68" stroke="#6c1608" stroke-width="1.5" marker-end="url(#aa9)"/>
+  <line x1="438" y1="90" x2="476" y2="95" stroke="#8a6008" stroke-width="1.5" marker-end="url(#ar9)"/>
+  <line x1="538" y1="97" x2="613" y2="127" stroke="#1c440c" stroke-width="1.5" marker-end="url(#ao9)"/>
+  <text x="546" y="118" font-size="7" fill="#1c440c">YES</text>
+  <line x1="508" y1="80" x2="713" y2="52" stroke="#6c1608" stroke-width="1.5" marker-end="url(#ar9)"/>
+  <text x="590" y="62" font-size="7" fill="#6c1608">NO</text>
+</svg>
+</div>
+<h2>Key screen</h2>
+<div class="mockup">
+  <div class="m-title">Audit</div>
+  <div class="m-harry">Pass me the CMMYY code from the tool's footer, or drop the file and I'll pull it myself.</div>
+  <div class="m-field"><label>CMMYY code</label><input value="C1026" style="width:120px;"></div>
+  <div style="margin:6px 0;"><span class="m-btn">Look up</span></div>
+  <div style="margin-top:8px;background:#d4ecc0;border:1px solid #6a9a3c;padding:8px;font-size:.72rem;">
+    <div><strong>Forecast Dashboard Q4</strong> <span class="badge b-g">ACTIVE</span></div>
+    <div>Owner: smith@accenture.com</div>
+    <div>Programme: UU Simpler Smarter Better</div>
+    <div>Expiry: <span class="badge b-g">VALID</span> 2027-10-15</div>
+    <div>Risk rating: <span class="badge b-g">LOW</span></div>
+  </div>
+</div>
+<div class="note" style="margin-top:12px;">File integrity checking (hash comparison against the stored certified version) is planned. As an interim control, use Rescan All to re-run checks against the stored version.</div>
+</div>
+
+</div><!-- #main -->
+</div><!-- #layout -->
+
+<script>
+function scrollTo(id){
+  var el=document.getElementById(id);
+  if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}
+  document.querySelectorAll('.nav-link').forEach(function(a){a.classList.remove('active');});
+  var active=document.querySelector('.nav-link[onclick*="'+id+'"]');
+  if(active)active.classList.add('active');
+}
+// Highlight active section on scroll
+var sections=document.querySelectorAll('.section');
+var links=document.querySelectorAll('.nav-link');
+document.getElementById('main').addEventListener('scroll',function(){
+  var scrollTop=this.scrollTop+80;
+  sections.forEach(function(s){
+    if(s.offsetTop<=scrollTop){
+      links.forEach(function(l){l.classList.remove('active');});
+      var id=s.id;
+      var l=document.querySelector('.nav-link[onclick*="\''+id+'\'"]');
+      if(l)l.classList.add('active');
+    }
+  });
+});
+</script>
+</body>
+</html>
